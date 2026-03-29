@@ -1,0 +1,350 @@
+/* === Tinti Container === */
+.tinti-container {
+  position: relative;
+  width: 160px;
+  height: 200px;
+}
+
+.tinti-container-small {
+  width: 100px;
+  height: 130px;
+}
+
+/* === Tinti Head === */
+.tinti {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.tinti-head {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 100px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 35%, #FF8C42, var(--orange, #FF6B35));
+  z-index: 2;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.tinti-small .tinti-head {
+  width: 76px;
+  height: 64px;
+}
+
+/* Eyes */
+.tinti-eye {
+  position: absolute;
+  top: 30%;
+  width: 26px;
+  height: 30px;
+  background: white;
+  border-radius: 50%;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.tinti-small .tinti-eye {
+  width: 16px;
+  height: 19px;
+}
+
+.tinti-eye-left { left: 22%; }
+.tinti-eye-right { right: 22%; }
+
+.tinti-pupil {
+  position: absolute;
+  bottom: 30%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 12px;
+  height: 14px;
+  background: #333;
+  border-radius: 50%;
+}
+
+.tinti-small .tinti-pupil {
+  width: 8px;
+  height: 9px;
+}
+
+.tinti-pupil::before {
+  content: '';
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  width: 5px;
+  height: 5px;
+  background: white;
+  border-radius: 50%;
+}
+
+.tinti-small .tinti-pupil::before {
+  width: 3px;
+  height: 3px;
+}
+
+/* Mouth */
+.tinti-mouth {
+  position: absolute;
+  bottom: 22%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 10px;
+  border-bottom: 3px solid #c0392b;
+  border-radius: 0 0 50% 50%;
+}
+
+.tinti-small .tinti-mouth {
+  width: 13px;
+  height: 6px;
+  border-bottom-width: 2px;
+}
+
+/* === Tentacles === */
+.tinti-tentacles {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 130px;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  gap: 1px;
+}
+
+.tinti-small .tinti-tentacles {
+  width: 82px;
+  height: 52px;
+}
+
+.tinti-tentacle {
+  width: 16px;
+  height: 80px;
+  background: linear-gradient(180deg, var(--orange, #FF6B35), #E55A2B);
+  border-radius: 0 0 8px 8px;
+  transform-origin: top center;
+  animation: tentacle-idle 3s ease-in-out infinite;
+  animation-delay: calc(var(--i) * 0.15s);
+  position: relative;
+}
+
+.tinti-small .tinti-tentacle {
+  width: 10px;
+  height: 52px;
+}
+
+.tinti-tentacle::after {
+  content: '';
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 8px;
+  height: 8px;
+  background: rgba(255,255,255,0.25);
+  border-radius: 50%;
+}
+
+.tinti-small .tinti-tentacle::after {
+  width: 5px;
+  height: 5px;
+  bottom: 3px;
+}
+
+@keyframes tentacle-idle {
+  0%, 100% { transform: rotate(-8deg); }
+  50% { transform: rotate(8deg); }
+}
+
+/* === Tinti Happy === */
+.tinti.happy .tinti-head {
+  animation: tinti-bounce 0.8s ease;
+}
+
+.tinti.happy .tinti-tentacle {
+  animation: tentacle-happy 0.8s ease;
+  animation-delay: calc(var(--i) * 0.05s);
+}
+
+@keyframes tinti-bounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  40% { transform: translateX(-50%) translateY(-20px); }
+  60% { transform: translateX(-50%) translateY(-5px); }
+}
+
+@keyframes tentacle-happy {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-20deg); }
+  75% { transform: rotate(20deg); }
+}
+
+/* === Tinti Flip === */
+.tinti.flip {
+  animation: tinti-flip 1.2s ease;
+}
+
+@keyframes tinti-flip {
+  0% { transform: rotate(0deg) scale(1); }
+  25% { transform: rotate(90deg) scale(1.1); }
+  50% { transform: rotate(180deg) scale(1.15); }
+  75% { transform: rotate(270deg) scale(1.1); }
+  100% { transform: rotate(360deg) scale(1); }
+}
+
+/* === Garfield Cat === */
+.garfield-container {
+  position: relative;
+  width: 140px;
+  height: 170px;
+  animation: garfield-enter 0.8s ease-out;
+}
+
+@keyframes garfield-enter {
+  0% { transform: translateY(100px); opacity: 0; }
+  60% { transform: translateY(-10px); opacity: 1; }
+  80% { transform: translateY(5px); }
+  100% { transform: translateY(0); }
+}
+
+.garfield {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* Body */
+.garfield-body {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 100px;
+  background: var(--garfield-orange, #FF8C00);
+  border-radius: 50% 50% 40% 40%;
+  background-image: repeating-linear-gradient(
+    90deg,
+    transparent,
+    transparent 18px,
+    rgba(0,0,0,0.12) 18px,
+    rgba(0,0,0,0.12) 22px
+  );
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.garfield-belly {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 45px;
+  background: #FFDAB9;
+  border-radius: 50%;
+}
+
+/* Head */
+.garfield-head {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90px;
+  height: 75px;
+  background: var(--garfield-orange, #FF8C00);
+  border-radius: 50%;
+  z-index: 2;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+/* Ears */
+.garfield-ear {
+  position: absolute;
+  top: -8px;
+  width: 0;
+  height: 0;
+  border-left: 14px solid transparent;
+  border-right: 14px solid transparent;
+  border-bottom: 24px solid var(--garfield-orange, #FF8C00);
+}
+
+.garfield-ear::after {
+  content: '';
+  position: absolute;
+  top: 8px;
+  left: -7px;
+  width: 0;
+  height: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-bottom: 14px solid #FFB366;
+}
+
+.garfield-ear-left { left: 8px; }
+.garfield-ear-right { right: 8px; }
+
+/* Eyes */
+.garfield-eye {
+  position: absolute;
+  top: 30%;
+  width: 20px;
+  height: 22px;
+  background: white;
+  border-radius: 50%;
+}
+
+.garfield-eye-left { left: 20%; }
+.garfield-eye-right { right: 20%; }
+
+.garfield-pupil {
+  position: absolute;
+  bottom: 30%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 10px;
+  height: 12px;
+  background: #333;
+  border-radius: 50%;
+}
+
+/* Nose */
+.garfield-nose {
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 10px;
+  height: 7px;
+  background: #c0392b;
+  border-radius: 50%;
+}
+
+/* Mouth */
+.garfield-mouth {
+  position: absolute;
+  bottom: 18%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 22px;
+  height: 8px;
+  border-bottom: 2px solid #333;
+  border-radius: 0 0 50% 50%;
+}
+
+/* Tail */
+.garfield-tail {
+  position: absolute;
+  bottom: 15px;
+  right: -10px;
+  width: 40px;
+  height: 20px;
+  border: 4px solid var(--garfield-orange, #FF8C00);
+  border-bottom: none;
+  border-left: none;
+  border-radius: 0 20px 0 0;
+}

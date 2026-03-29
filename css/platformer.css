@@ -1,0 +1,93 @@
+/* === Submarine Shooter Screen === */
+#platformer-screen {
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+#platformer-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  inset: 0;
+  touch-action: none;
+  cursor: crosshair;
+}
+
+.platformer-ui {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 16px;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.platformer-ui > * {
+  pointer-events: auto;
+}
+
+.platformer-score {
+  font-size: 1.4rem;
+  font-weight: 900;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+}
+
+.platformer-word {
+  background: rgba(255,255,255,0.95);
+  color: #333;
+  padding: 6px 20px;
+  border-radius: 20px;
+  font-size: 1.15rem;
+  font-weight: 700;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+  min-width: 70px;
+  text-align: center;
+}
+
+.platformer-replay {
+  pointer-events: auto;
+}
+
+.platformer-msg {
+  position: absolute;
+  top: 35%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 2.2rem;
+  font-weight: 900;
+  text-shadow: 0 3px 12px rgba(0,0,0,0.6);
+  z-index: 20;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s;
+  text-align: center;
+  white-space: nowrap;
+  color: #fff;
+}
+
+.platformer-msg.visible {
+  opacity: 1;
+}
+
+.platformer-back {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  font-size: 0.85rem;
+  padding: 5px 16px;
+  min-height: 32px;
+  opacity: 0.5;
+}
+
+.platformer-back:hover,
+.platformer-back:active {
+  opacity: 1;
+}

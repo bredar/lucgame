@@ -1,0 +1,17 @@
+{
+  "name": "Tintenfisch-Lesen: Lucs Lesespiel",
+  "short_name": "Tinti-Lesen",
+  "start_url": ".",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#1a2980",
+  "theme_color": "#26d0ce",
+  "lang": "de",
+  "icons": [
+    {
+      "src": "assets/icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
