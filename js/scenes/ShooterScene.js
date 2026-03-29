@@ -470,11 +470,14 @@ class ShooterScene extends Phaser.Scene {
     // If already connected to a station, can't build further — only undo or Fahren
     if (this.connectedStation) return;
 
-    // If it's a station cell adjacent to end, connect to it (don't place track ON station)
+    // If it's a station cell adjacent to end, lay track INTO the station
     if (r >= 0 && r < this.ROWS && c >= 0 && c < this.COLS) {
       const cell = this.grid[r][c];
       if (cell.type === CELL_STATION && Math.abs(r - this.trackEndR) + Math.abs(c - this.trackEndC) === 1) {
-        // Don't add station to trackPath — just mark as connected
+        this.trackPath.push({ r, c });
+        this.trackEndR = r;
+        this.trackEndC = c;
+        this.drawTrack();
         this.connectedStation = this.stations.find(s => s.r === r && s.c === c);
         this.showFahrenBtn();
         return;
@@ -674,10 +677,10 @@ class ShooterScene extends Phaser.Scene {
 
     if (col < 0 || col >= this.COLS || row < 0 || row >= this.ROWS) return;
 
-    // Undo if tapping last track piece
+    // Undo if tapping last track piece (or station we're connected to)
     if (this.trackPath.length > 1) {
       const last = this.trackPath[this.trackPath.length - 1];
-      if (last.r === row && last.c === col && this.grid[row][col].type === CELL_TRACK) {
+      if (last.r === row && last.c === col) {
         this.undoLastTrack();
         return;
       }
@@ -777,7 +780,11 @@ class ShooterScene extends Phaser.Scene {
   handleCorrect() {
     this.trackStars++;
     this.starsText.setText(`⭐ ${this.quizStars + this.trackStars}`);
-    try { this.sound.play('prompt_richtig'); } catch(e) {}
+
+    // Play random Garfield encouragement
+    const idx = Phaser.Math.Between(1, 12);
+    const gKey = `garfield_${String(idx).padStart(2, '0')}`;
+    try { this.sound.play(gKey); } catch(e) {}
 
     // Stars burst
     for (let i = 0; i < 10; i++) {
@@ -789,26 +796,36 @@ class ShooterScene extends Phaser.Scene {
       });
     }
 
-    const msg = this.add.text(this.W / 2, this.H * 0.35, '✅ Richtig!', {
-      fontFamily: 'Nunito', fontSize: '36px', fontStyle: '900', color: '#4CAF50',
+    // Garfield speech bubble text
+    const garfieldTexts = [
+      'Miau-nifik! 🐱', 'Pfotastisch! 🐾', 'Super, Luc! 🌟', 'Volltreffer! 🎯',
+      'Tinti tanzt! 🐙', 'Wow, toll! ✨', 'Weiter so! 💪', 'Du rockst! 🎸',
+      'Lesemeister! 📖', 'Bravo! 👏', 'Tschaka! 🔥', 'Beeindruckend! 😎',
+    ];
+    const msg = this.add.text(this.W / 2, this.H * 0.3, garfieldTexts[idx - 1], {
+      fontFamily: 'Nunito', fontSize: '32px', fontStyle: '900', color: '#FFD700',
       shadow: { offsetY: 3, color: '#000000cc', blur: 8, fill: true }
     }).setOrigin(0.5).setDepth(60);
-    this.tweens.add({ targets: msg, y: msg.y - 30, alpha: 0, delay: 1000, duration: 500, onComplete: () => msg.destroy() });
+    this.tweens.add({ targets: msg, y: msg.y - 30, alpha: 0, delay: 1500, duration: 500, onComplete: () => msg.destroy() });
 
-    this.time.delayedCall(1800, () => this.nextWord());
+    this.time.delayedCall(2200, () => this.nextWord());
   }
 
   handleWrong() {
-    try { this.sound.play('prompt_falsch'); } catch(e) {}
+    // Play random Garfield "wrong" encouragement
+    const idx = Phaser.Math.Between(1, 3);
+    const gKey = `garfield_falsch_${String(idx).padStart(2, '0')}`;
+    try { this.sound.play(gKey); } catch(e) {}
 
-    const msg = this.add.text(this.W / 2, this.H * 0.35, '❌ Falscher Bahnhof!', {
-      fontFamily: 'Nunito', fontSize: '28px', fontStyle: '900', color: '#FF9800',
+    const wrongTexts = ['Fast! Versuch nochmal! 🐱', 'Nicht schlimm! 💪', 'Du schaffst das! 🐾'];
+    const msg = this.add.text(this.W / 2, this.H * 0.3, wrongTexts[idx - 1], {
+      fontFamily: 'Nunito', fontSize: '26px', fontStyle: '900', color: '#FF9800',
       shadow: { offsetY: 2, color: '#000000cc', blur: 6, fill: true }
     }).setOrigin(0.5).setDepth(60);
-    this.tweens.add({ targets: msg, y: msg.y - 30, alpha: 0, delay: 1200, duration: 500, onComplete: () => msg.destroy() });
+    this.tweens.add({ targets: msg, y: msg.y - 30, alpha: 0, delay: 1500, duration: 500, onComplete: () => msg.destroy() });
 
     // Replay correct word
-    this.time.delayedCall(600, () => this.playCurrentAudio());
+    this.time.delayedCall(800, () => this.playCurrentAudio());
 
     // Highlight correct station
     for (const st of this.stations) {
@@ -881,10 +898,6 @@ class ShooterScene extends Phaser.Scene {
     train.setDepth(15);
 
     const path = this.trackPath.map(p => ({ x: p.c * C + C / 2, y: p.r * C + C / 2 }));
-    // Add the station as final destination
-    if (this.connectedStation) {
-      path.push({ x: this.connectedStation.c * C + C / 2, y: this.connectedStation.r * C + C / 2 });
-    }
     train.setPosition(path[0].x, path[0].y);
 
     let idx = 0;

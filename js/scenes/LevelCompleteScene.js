@@ -61,6 +61,12 @@ class LevelCompleteScene extends Phaser.Scene {
       targets: msgText, scale: 1, duration: 500, delay: 800, ease: 'Back.easeOut'
     });
 
+    // Play Garfield level-complete audio
+    const lvlIdx = Phaser.Math.Between(1, 3);
+    this.time.delayedCall(600, () => {
+      try { this.sound.play(`garfield_level_${String(lvlIdx).padStart(2, '0')}`); } catch(e) {}
+    });
+
     // Buttons
     const btnY = H * 0.74;
 

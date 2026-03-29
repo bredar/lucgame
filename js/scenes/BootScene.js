@@ -36,6 +36,16 @@ class BootScene extends Phaser.Scene {
     this.load.audio('prompt_fahrezu', 'assets/audio/fahre_zu.mp3');
     this.load.audio('prompt_richtig', 'assets/audio/richtig.mp3');
     this.load.audio('prompt_falsch', 'assets/audio/falsch.mp3');
+
+    // Garfield encouragement phrases
+    for (let i = 1; i <= 12; i++) {
+      const key = `garfield_${String(i).padStart(2, '0')}`;
+      this.load.audio(key, `assets/audio/${key}.mp3`);
+    }
+    for (let i = 1; i <= 3; i++) {
+      this.load.audio(`garfield_falsch_${String(i).padStart(2, '0')}`, `assets/audio/garfield_falsch_${String(i).padStart(2, '0')}.mp3`);
+      this.load.audio(`garfield_level_${String(i).padStart(2, '0')}`, `assets/audio/garfield_level_${String(i).padStart(2, '0')}.mp3`);
+    }
   }
 
   create() {
